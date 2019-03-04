@@ -55,6 +55,7 @@ var Domain = function (_React$Component) {
             this.renderRow('Expiry', 'domain_expiry', 'input')
           )
         ),
+        React.createElement(Aliases, { domain: this.state.domain }),
         React.createElement(
           'button',
           { onClick: function onClick() {
@@ -167,6 +168,214 @@ var Domain = function (_React$Component) {
   }]);
 
   return Domain;
+}(React.Component);
+
+var Aliases = function (_React$Component2) {
+  _inherits(Aliases, _React$Component2);
+
+  function Aliases(props) {
+    _classCallCheck(this, Aliases);
+
+    // Take the domain and save it in the state
+    var _this4 = _possibleConstructorReturn(this, (Aliases.__proto__ || Object.getPrototypeOf(Aliases)).call(this, props));
+
+    _this4.state = {
+      domain: props.domain,
+      aliases: props.domain.aliases
+    };
+    return _this4;
+  }
+
+  _createClass(Aliases, [{
+    key: 'render',
+    value: function render() {
+      var _this5 = this;
+
+      return React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'h2',
+          null,
+          'Email aliases'
+        ),
+        React.createElement(
+          'table',
+          null,
+          React.createElement(
+            'tbody',
+            null,
+            React.createElement(
+              'tr',
+              null,
+              React.createElement(
+                'th',
+                null,
+                'Actions'
+              ),
+              React.createElement(
+                'th',
+                null,
+                'Address'
+              ),
+              React.createElement(
+                'th',
+                null,
+                'Recipients'
+              )
+            ),
+            this.state.aliases.map(function (item, index) {
+              return React.createElement(Alias, { key: item.alias_id, domain: _this5.state.domain, alias: item });
+            }),
+            this.state.aliases.length == 0 && React.createElement(
+              'tr',
+              null,
+              React.createElement(
+                'td',
+                null,
+                React.createElement(
+                  'div',
+                  { className: 'action' },
+                  'preconfigured'
+                )
+              ),
+              React.createElement(
+                'td',
+                null,
+                '(Catch all)'
+              ),
+              React.createElement(
+                'td',
+                null,
+                'Master mailbox'
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Aliases;
+}(React.Component);
+
+var Alias = function (_React$Component3) {
+  _inherits(Alias, _React$Component3);
+
+  function Alias(props) {
+    _classCallCheck(this, Alias);
+
+    // Take the domain, and alias and save it in the state
+    var _this6 = _possibleConstructorReturn(this, (Alias.__proto__ || Object.getPrototypeOf(Alias)).call(this, props));
+
+    _this6.state = {
+      domain: props.domain,
+      aliases: props.domain.aliases,
+      alias: props.alias
+    };
+    return _this6;
+  }
+
+  _createClass(Alias, [{
+    key: 'render',
+    value: function render() {
+      var _this7 = this;
+
+      return React.createElement(
+        'tr',
+        { key: this.state.alias.alias_id },
+        React.createElement(
+          'td',
+          { className: 'action' },
+          React.createElement(
+            'a',
+            { href: '#' },
+            'edit'
+          ),
+          '\xA0',
+          React.createElement(
+            'a',
+            { href: '#' },
+            'delete'
+          ),
+          '\xA0',
+          React.createElement(
+            'a',
+            { href: '#' },
+            this.state.alias.alias_enabled ? 'disable' : 'enable'
+          )
+        ),
+        React.createElement(
+          'td',
+          null,
+          this.state.alias.alias_name ? this.state.alias.alias_name : '(Catch all)'
+        ),
+        React.createElement(
+          'td',
+          null,
+          this.state.alias.recipients.map(function (item, index) {
+            return React.createElement(Recipient, { key: item.recipient_id, domain: _this7.state.domain, alias: _this7.state.alias, recipient: item });
+          }),
+          this.state.alias.recipients.length == 0 ? 'Reject' : ''
+        )
+      );
+    }
+  }]);
+
+  return Alias;
+}(React.Component);
+
+var Recipient = function (_React$Component4) {
+  _inherits(Recipient, _React$Component4);
+
+  function Recipient(props) {
+    _classCallCheck(this, Recipient);
+
+    // Take the domain, alias, and recipient and save it in the state
+    var _this8 = _possibleConstructorReturn(this, (Recipient.__proto__ || Object.getPrototypeOf(Recipient)).call(this, props));
+
+    _this8.state = {
+      domain: props.domain,
+      alias: props.domain.alias,
+      recipient: props.recipient
+    };
+    return _this8;
+  }
+
+  _createClass(Recipient, [{
+    key: 'render',
+    value: function render() {
+      var type = this.state.recipient.recipient_type;
+      var content = this.state.recipient.recipient_content;
+      switch (type) {
+        case 'mailbox':
+          if (content == '') {
+            content = 'Master mailbox';
+          }
+          content = '[' + content + ']';
+          break;
+        case 'address':
+          if (content.indexOf('@') === -1) {
+            content += '@' + this.state.domain.domain_name;
+          }
+          break;
+        case 'list':
+          content = '{' + content + '}';
+          break;
+        default:
+          content = type + ': ' + content;
+      }
+
+      return React.createElement(
+        'span',
+        { key: this.state.recipient.recipient_id },
+        content,
+        ',\xA0'
+      );
+    }
+  }]);
+
+  return Recipient;
 }(React.Component);
 
 var container = document.querySelector('.react-container-domain');
