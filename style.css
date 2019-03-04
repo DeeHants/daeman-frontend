@@ -1,0 +1,42 @@
+body {
+    font-family: arial;
+}
+
+h1 {
+    font-size: x-large;
+}
+
+h2 {
+    font-size: large;
+}
+
+h3 {
+    font-size: medium;
+}
+
+th {
+    text-align: left;
+}
+
+li {
+    margin-left: -15px;
+}
+
+.footer {
+    font-size: x-small;
+}
+
+.action {
+    font-size: x-small;
+}
+
+.help {
+    font-size: x-small;
+}
+
+.error {
+    color: red;
+}
+
+.status {
+}
