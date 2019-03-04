@@ -1,0 +1,3 @@
+[submodule "lib"]
+	path = lib
+	url = git@bitbucket.org:DeeHants/daeman-lib.git
