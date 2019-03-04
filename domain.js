@@ -153,7 +153,6 @@ var Domain = function (_React$Component) {
       }
 
       this.state.domain[field_name] = value;
-      this.state.domain.aliases.length--;
       this.state.modified = true;
       this.setState(this.state);
     }

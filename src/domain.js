@@ -89,7 +89,6 @@ class Domain extends React.Component {
     if (target.type == 'checkbox') { value = target.checked ? 1 : 0; }
 
     this.state.domain[field_name] = value;
-    this.state.domain.aliases.length--;
     this.state.modified = true;
     this.setState(this.state);
   }
